@@ -1,17 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🤖 AI Spring Boot Assistant - Interactive Chatbot</title>
+    <title>🤖 AI Spring Boot Assistant - Advanced Chatbot</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -21,8 +15,6 @@
             align-items: center;
             padding: 20px;
         }
-
-        /* Chat Container */
         .chat-container {
             width: 100%;
             max-width: 1200px;
@@ -35,19 +27,10 @@
             overflow: hidden;
             animation: slideUp 0.5s ease-out;
         }
-
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        /* Header */
         .chat-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -55,15 +38,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            animation: gradientShift 3s ease infinite;
         }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         .bot-avatar {
             width: 50px;
             height: 50px;
@@ -75,29 +50,13 @@
             font-size: 30px;
             animation: bounce 2s infinite;
         }
-
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-5px); }
         }
-
-        .header-info h1 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
-        .header-info p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 5px;
-        }
-
+        .header-info h1 { font-size: 1.5rem; margin-bottom: 5px; }
+        .header-info p { font-size: 0.9rem; opacity: 0.9; }
+        .status { display: flex; align-items: center; gap: 5px; margin-top: 5px; }
         .status-dot {
             width: 8px;
             height: 8px;
@@ -105,70 +64,51 @@
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
-
         @keyframes pulse {
             0% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.2); }
             100% { opacity: 1; transform: scale(1); }
         }
-
-        /* Messages Area */
         .chat-messages {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
             background: #f8fafc;
         }
-
-        /* Message Bubbles */
         .message {
             display: flex;
             margin-bottom: 20px;
             animation: fadeIn 0.3s ease-out;
         }
-
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .message.user {
-            justify-content: flex-end;
-        }
-
+        .message.user { justify-content: flex-end; }
         .message-content {
             max-width: 70%;
             padding: 12px 18px;
             border-radius: 18px;
             position: relative;
+            white-space: pre-wrap;
+            line-height: 1.5;
         }
-
         .message.bot .message-content {
             background: white;
             color: #1e293b;
             border: 1px solid #e2e8f0;
             border-bottom-left-radius: 4px;
         }
-
         .message.user .message-content {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border-bottom-right-radius: 4px;
         }
-
         .message-time {
             font-size: 0.7rem;
             margin-top: 5px;
             opacity: 0.7;
         }
-
-        /* Typing Indicator */
         .typing-indicator {
             display: flex;
             gap: 5px;
@@ -178,7 +118,6 @@
             border: 1px solid #e2e8f0;
             width: fit-content;
         }
-
         .typing-dot {
             width: 8px;
             height: 8px;
@@ -186,16 +125,12 @@
             border-radius: 50%;
             animation: typing 1.4s infinite;
         }
-
         .typing-dot:nth-child(2) { animation-delay: 0.2s; }
         .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
         @keyframes typing {
             0%, 60%, 100% { transform: translateY(0); }
             30% { transform: translateY(-10px); }
         }
-
-        /* Input Area */
         .chat-input-area {
             padding: 20px;
             background: white;
@@ -203,7 +138,6 @@
             display: flex;
             gap: 10px;
         }
-
         .chat-input {
             flex: 1;
             padding: 12px 18px;
@@ -212,13 +146,11 @@
             font-size: 1rem;
             transition: all 0.3s;
         }
-
         .chat-input:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-
         .send-button {
             width: 50px;
             height: 50px;
@@ -230,16 +162,7 @@
             cursor: pointer;
             transition: transform 0.2s;
         }
-
-        .send-button:hover {
-            transform: scale(1.05);
-        }
-
-        .send-button:active {
-            transform: scale(0.95);
-        }
-
-        /* Quick Actions */
+        .send-button:hover { transform: scale(1.05); }
         .quick-actions {
             padding: 10px 20px;
             background: white;
@@ -248,7 +171,6 @@
             flex-wrap: wrap;
             border-top: 1px solid #e2e8f0;
         }
-
         .quick-btn {
             padding: 8px 16px;
             background: #f1f5f9;
@@ -258,51 +180,31 @@
             transition: all 0.2s;
             font-size: 0.9rem;
         }
-
         .quick-btn:hover {
             background: #e2e8f0;
             transform: translateY(-2px);
         }
-
-        /* Scrollbar */
-        .chat-messages::-webkit-scrollbar {
-            width: 8px;
+        .error-message {
+            color: #ef4444;
+            background: #fee2e2;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
         }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .message-content {
-                max-width: 85%;
-            }
-            
-            .quick-actions {
-                overflow-x: auto;
-            }
+            .message-content { max-width: 85%; }
+            .quick-actions { overflow-x: auto; }
         }
     </style>
 </head>
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <div class="bot-avatar">
-                🤖
-            </div>
+            <div class="bot-avatar">🤖</div>
             <div class="header-info">
                 <h1>AI Spring Boot Assistant</h1>
                 <p>Your intelligent coding companion</p>
-                <div class="status">
-                    <div class="status-dot"></div>
-                    <span style="font-size: 0.8rem;">Online & Ready</span>
-                </div>
+                <div class="status"><div class="status-dot"></div><span>Online & Ready</span></div>
             </div>
         </div>
 
@@ -310,31 +212,33 @@
             <div class="message bot">
                 <div class="message-content">
                     👋 Hello! I'm your AI Spring Boot Assistant.<br>
-                    I can help you analyze text sentiment, check palindromes, and more!<br><br>
-                    <strong>Try asking me:</strong><br>
-                    • "Analyze sentiment: I love coding!"<br>
+                    I can help you analyze text, check palindromes, reverse strings, and more!<br><br>
+                    <strong>Try these examples:</strong><br>
                     • "Is racecar a palindrome?"<br>
-                    • "Count vowels in hello world"<br>
-                    • "Analyze text: Spring Boot is amazing"
+                    • "Is John a palindrome?"<br>
+                    • "Reverse hello world"<br>
+                    • "Find last vowel in beautiful"<br>
+                    • "Extract vowels from programming"<br>
+                    • "Character frequency in banana"<br>
+                    • "Analyze sentiment: I love coding"<br>
                     <div class="message-time">Just now</div>
                 </div>
             </div>
         </div>
 
         <div class="quick-actions">
-            <button class="quick-btn" onclick="quickAction('sentiment', 'I love Spring Boot!')">😊 Sentiment: Positive</button>
-            <button class="quick-btn" onclick="quickAction('sentiment', 'This is terrible')">😔 Sentiment: Negative</button>
             <button class="quick-btn" onclick="quickAction('palindrome', 'racecar')">🔄 Palindrome: racecar</button>
-            <button class="quick-btn" onclick="quickAction('vowels', 'hello world')">🔤 Vowels: hello world</button>
-            <button class="quick-btn" onclick="quickAction('analyze', 'Spring Boot is awesome')">📊 Analyze Text</button>
+            <button class="quick-btn" onclick="quickAction('palindrome', 'John')">👤 Palindrome: John</button>
+            <button class="quick-btn" onclick="quickAction('reverse', 'hello world')">🔄 Reverse: hello world</button>
+            <button class="quick-btn" onclick="quickAction('last-vowel', 'beautiful')">🔊 Last Vowel: beautiful</button>
+            <button class="quick-btn" onclick="quickAction('extract-vowels', 'programming')">🔤 Extract Vowels</button>
+            <button class="quick-btn" onclick="quickAction('frequency', 'banana')">📊 Frequency: banana</button>
             <button class="quick-btn" onclick="clearChat()">🗑️ Clear Chat</button>
         </div>
 
         <div class="chat-input-area">
-            <input type="text" class="chat-input" id="userInput" placeholder="Type your message here... (e.g., Analyze sentiment: I love coding)" onkeypress="handleKeyPress(event)">
-            <button class="send-button" onclick="sendMessage()">
-                ➤
-            </button>
+            <input type="text" class="chat-input" id="userInput" placeholder="Ask me anything! Try: Is racecar a palindrome? or Reverse hello" onkeypress="handleKeyPress(event)">
+            <button class="send-button" onclick="sendMessage()">➤</button>
         </div>
     </div>
 
@@ -345,16 +249,8 @@
             const messagesDiv = document.getElementById('chatMessages');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
-            
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            messageDiv.innerHTML = `
-                <div class="message-content">
-                    ${content}
-                    <div class="message-time">${time}</div>
-                </div>
-            `;
-            
+            messageDiv.innerHTML = `<div class="message-content">${content.replace(/\n/g, '<br>')}<div class="message-time">${time}</div></div>`;
             messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
@@ -362,101 +258,169 @@
         function showTypingIndicator() {
             if (isTyping) return;
             isTyping = true;
-            
             const messagesDiv = document.getElementById('chatMessages');
             const typingDiv = document.createElement('div');
             typingDiv.className = 'message bot';
             typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = `
-                <div class="typing-indicator">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                </div>
-            `;
-            
+            typingDiv.innerHTML = `<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
             messagesDiv.appendChild(typingDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
         function hideTypingIndicator() {
             const indicator = document.getElementById('typingIndicator');
-            if (indicator) {
-                indicator.remove();
-            }
+            if (indicator) indicator.remove();
             isTyping = false;
+        }
+
+        // Extract word from palindrome query
+        function extractWordForPalindrome(message) {
+            // Remove common question words and punctuation
+            let cleaned = message.toLowerCase()
+                .replace(/is|a|an|the|palindrome|\?/g, '')
+                .replace(/[^\w\s]/g, '')
+                .trim();
+            
+            // Split into words and take the last word or the longest word
+            let words = cleaned.split(/\s+/);
+            if (words.length === 1) return words[0];
+            
+            // Look for a word that might be the palindrome candidate
+            for (let word of words) {
+                if (word.length > 1 && !['is', 'this', 'that', 'what'].includes(word)) {
+                    return word;
+                }
+            }
+            return words[words.length - 1] || cleaned;
         }
 
         async function processMessage(message) {
             showTypingIndicator();
-            
             try {
-                let response;
-                let content = message.toLowerCase();
+                let lowerMsg = message.toLowerCase().trim();
                 
-                // Parse natural language commands
-                if (content.includes('sentiment') || content.includes('analyze sentiment')) {
-                    let text = message.replace(/sentiment|analyze sentiment/gi, '').trim();
-                    if (!text) text = message;
-                    const result = await callAPI('/api/ai/sentiment', { text });
-                    return `📊 **Sentiment Analysis Result:**\n\n${result.sentiment}`;
+                // Check for palindrome query
+                if (lowerMsg.includes('palindrome') || lowerMsg.includes('is ') && (lowerMsg.includes(' racecar') || lowerMsg.includes(' john') || lowerMsg.includes(' madam'))) {
+                    let word = extractWordForPalindrome(message);
+                    if (word) {
+                        const result = await callAPI('/api/ai/palindrome-detail', { text: word });
+                        return result.result;
+                    }
+                    return "❓ I couldn't understand what word to check. Try: 'Is racecar a palindrome?'";
                 }
-                else if (content.includes('palindrome') || content.includes('is palindrome')) {
-                    let text = message.replace(/palindrome|is palindrome/gi, '').trim();
-                    if (!text) text = message;
-                    const result = await callAPI('/api/ai/palindrome', { text });
-                    return `🔄 **Palindrome Check:**\n\n"${text}" is ${result.isPalindrome ? '✅ a palindrome!' : '❌ not a palindrome.'}`;
+                
+                // Check for reverse string
+                else if (lowerMsg.includes('reverse')) {
+                    let str = message.replace(/reverse/gi, '').trim();
+                    if (str && str.length > 0) {
+                        const result = await callAPI('/api/ai/reverse', { text: str });
+                        return result.result;
+                    }
+                    return "❓ What would you like me to reverse? Try: 'Reverse hello world'";
                 }
-                else if (content.includes('vowel') || content.includes('count vowel')) {
-                    let text = message.replace(/vowel|count vowel/gi, '').trim();
-                    if (!text) text = message;
-                    const result = await callAPI('/api/ai/vowels', { text });
-                    return `🔤 **Vowel Analysis:**\n\nText: "${text}"\nVowels: ${result.vowelCount}\nConsonants: ${result.consonantCount}`;
+                
+                // Check for last vowel
+                else if (lowerMsg.includes('last vowel')) {
+                    let str = message.replace(/last vowel|find|in/gi, '').trim();
+                    if (str && str.length > 0) {
+                        const result = await callAPI('/api/ai/last-vowel', { text: str });
+                        return result.result;
+                    }
+                    return "❓ What word would you like to find the last vowel in?";
                 }
-                else if (content.includes('analyze') || content.includes('analyze text')) {
-                    let text = message.replace(/analyze|analyze text/gi, '').trim();
-                    if (!text) text = message;
-                    const result = await callAPI('/api/ai/analyze', { text });
-                    return `📊 **Text Analysis Results:**\n\n` +
-                           `📝 Input: "${text}"\n` +
-                           `📖 Word Count: ${result.analysis.wordCount}\n` +
-                           `🔤 Character Count: ${result.analysis.charCount}\n` +
-                           `🎯 Average Word Length: ${result.analysis.avgWordLength}\n` +
+                
+                // Check for first vowel
+                else if (lowerMsg.includes('first vowel')) {
+                    let str = message.replace(/first vowel|find|in/gi, '').trim();
+                    if (str && str.length > 0) {
+                        const result = await callAPI('/api/ai/first-vowel', { text: str });
+                        return result.result;
+                    }
+                    return "❓ What word would you like to find the first vowel in?";
+                }
+                
+                // Check for extract vowels
+                else if (lowerMsg.includes('extract vowels') || lowerMsg.includes('extract the vowels')) {
+                    let str = message.replace(/extract vowels|extract the vowels|from/gi, '').trim();
+                    if (str && str.length > 0) {
+                        const result = await callAPI('/api/ai/extract-vowels', { text: str });
+                        return result.result;
+                    }
+                    return "❓ What word would you like to extract vowels from?";
+                }
+                
+                // Check for character frequency
+                else if (lowerMsg.includes('frequency') || lowerMsg.includes('count letters')) {
+                    let str = message.replace(/frequency|count letters|character frequency|in/gi, '').trim();
+                    if (str && str.length > 0) {
+                        const result = await callAPI('/api/ai/frequency', { text: str });
+                        return result.result;
+                    }
+                    return "❓ What word would you like to analyze?";
+                }
+                
+                // Check for sentiment analysis
+                else if (lowerMsg.includes('sentiment') || lowerMsg.includes('analyze') || 
+                         lowerMsg.includes('feel') || lowerMsg.includes('think about')) {
+                    let txt = message.replace(/sentiment|analyze|what do you think about|how do you feel about/gi, '').trim();
+                    if (!txt) txt = message;
+                    const result = await callAPI('/api/ai/sentiment', { text: txt });
+                    return `📊 **Sentiment Analysis Result:**\n\n"${txt}"\n\n${result.sentiment}`;
+                }
+                
+                // Check for vowel count
+                else if (lowerMsg.includes('count vowels') || lowerMsg.includes('how many vowels')) {
+                    let str = message.replace(/count vowels|how many vowels|in/gi, '').trim();
+                    if (str && str.length > 0) {
+                        const result = await callAPI('/api/ai/vowels', { text: str });
+                        return `🔊 **Vowel Count:**\n\nText: "${str}"\nVowels: ${result.vowelCount}\nConsonants: ${result.consonantCount}`;
+                    }
+                    return "❓ What word would you like to count vowels in?";
+                }
+                
+                // Check for greeting
+                else if (lowerMsg.match(/^(hello|hi|hey|greetings|good morning|good afternoon|good evening)/)) {
+                    let name = message.replace(/^(hello|hi|hey|greetings|good morning|good afternoon|good evening)/i, '').trim();
+                    const result = await callAPI('/api/ai/greet', { name: name || 'User' });
+                    return `👋 ${result.greeting}`;
+                }
+                
+                // Check for health/status
+                else if (lowerMsg.includes('health') || lowerMsg.includes('status') || lowerMsg.includes('working')) {
+                    const result = await callAPI('/api/ai/health', {});
+                    return `🏥 **System Status:**\n\nStatus: ${result.status}\nService: ${result.service}\nVersion: ${result.version}`;
+                }
+                
+                // Check for help
+                else if (lowerMsg.includes('help') || lowerMsg.includes('what can you do')) {
+                    return `🤖 **I can help you with:**\n\n` +
+                           `• **Palindrome Check:** "Is racecar a palindrome?"\n` +
+                           `• **Name Check:** "Is John a palindrome?"\n` +
+                           `• **Reverse String:** "Reverse hello world"\n` +
+                           `• **Last Vowel:** "Find last vowel in beautiful"\n` +
+                           `• **Extract Vowels:** "Extract vowels from programming"\n` +
+                           `• **Frequency:** "Character frequency in banana"\n` +
+                           `• **Vowel Count:** "Count vowels in hello"\n` +
+                           `• **Sentiment:** "Analyze sentiment: I love coding"\n` +
+                           `• **Greetings:** "Hello" or "Hi"\n` +
+                           `• **Health:** "Status" or "Health"`;
+                }
+                
+                // Default to text analysis
+                else {
+                    const result = await callAPI('/api/ai/analyze', { text: message });
+                    return `📊 **Text Analysis:**\n\n` +
+                           `📝 "${message}"\n\n` +
+                           `📖 Words: ${result.analysis.wordCount}\n` +
+                           `🔤 Characters: ${result.analysis.charCount}\n` +
                            `🔊 Vowels: ${result.vowelCount}\n` +
                            `🔇 Consonants: ${result.consonantCount}\n` +
                            `🔄 Palindrome: ${result.isPalindrome ? 'Yes ✅' : 'No ❌'}`;
                 }
-                else if (content.includes('greet') || content.includes('hello')) {
-                    let name = message.replace(/greet|hello|hi/gi, '').trim();
-                    const result = await callAPI('/api/ai/greet', { name: name || 'User' });
-                    return `👋 ${result.greeting}`;
-                }
-                else if (content.includes('help')) {
-                    return `🤖 **I can help you with:**\n\n` +
-                           `• **Sentiment Analysis:** "Analyze sentiment: I love coding"\n` +
-                           `• **Palindrome Check:** "Is racecar a palindrome?"\n` +
-                           `• **Vowel Count:** "Count vowels in hello world"\n` +
-                           `• **Text Analysis:** "Analyze text: Spring Boot is awesome"\n` +
-                           `• **Greetings:** "Hello" or "Greet me"\n` +
-                           `• **Health Check:** "Status" or "Health"\n\n` +
-                           `Try any of these commands! 🚀`;
-                }
-                else if (content.includes('health') || content.includes('status')) {
-                    const result = await callAPI('/api/ai/health', {});
-                    return `🏥 **System Status:**\n\n` +
-                           `Status: ${result.status}\n` +
-                           `Service: ${result.service}\n` +
-                           `Version: ${result.version}`;
-                }
-                else {
-                    // Default to sentiment analysis
-                    const result = await callAPI('/api/ai/sentiment', { text: message });
-                    return `🤔 **I analyzed your message:**\n\n` +
-                           `"${message}"\n\n` +
-                           `Sentiment: ${result.sentiment}`;
-                }
+                
             } catch (error) {
-                return `❌ **Error:** ${error.message}\n\nPlease make sure the backend server is running!`;
+                console.error('Error:', error);
+                return `❌ **Error:** Could not connect to the server. Please make sure the backend is running.\n\nError: ${error.message}`;
             } finally {
                 hideTypingIndicator();
             }
@@ -464,31 +428,19 @@
 
         async function callAPI(endpoint, params) {
             const url = new URL(endpoint, window.location.origin);
-            if (params.text) {
-                url.searchParams.append('text', params.text);
-            }
-            if (params.name) {
-                url.searchParams.append('name', params.name);
-            }
-            
+            if (params.text) url.searchParams.append('text', params.text);
+            if (params.name) url.searchParams.append('name', params.name);
             const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`API returned ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`API returned ${response.status}`);
             return await response.json();
         }
 
         async function sendMessage() {
             const input = document.getElementById('userInput');
             const message = input.value.trim();
-            
             if (!message) return;
-            
-            // Add user message
             addMessage(message, true);
             input.value = '';
-            
-            // Process and add bot response
             const response = await processMessage(message);
             addMessage(response, false);
         }
@@ -496,18 +448,11 @@
         function quickAction(type, text) {
             let command = '';
             switch(type) {
-                case 'sentiment':
-                    command = `Analyze sentiment: ${text}`;
-                    break;
-                case 'palindrome':
-                    command = `Is ${text} a palindrome?`;
-                    break;
-                case 'vowels':
-                    command = `Count vowels in ${text}`;
-                    break;
-                case 'analyze':
-                    command = `Analyze text: ${text}`;
-                    break;
+                case 'palindrome': command = `Is ${text} a palindrome?`; break;
+                case 'reverse': command = `Reverse ${text}`; break;
+                case 'last-vowel': command = `Find last vowel in ${text}`; break;
+                case 'extract-vowels': command = `Extract vowels from ${text}`; break;
+                case 'frequency': command = `Character frequency in ${text}`; break;
             }
             document.getElementById('userInput').value = command;
             sendMessage();
@@ -515,20 +460,11 @@
 
         function clearChat() {
             const messagesDiv = document.getElementById('chatMessages');
-            messagesDiv.innerHTML = `
-                <div class="message bot">
-                    <div class="message-content">
-                        🧹 Chat cleared! How can I help you?
-                        <div class="message-time">Just now</div>
-                    </div>
-                </div>
-            `;
+            messagesDiv.innerHTML = `<div class="message bot"><div class="message-content">🧹 Chat cleared! How can I help you?<div class="message-time">Just now</div></div></div>`;
         }
 
         function handleKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendMessage();
-            }
+            if (event.key === 'Enter') sendMessage();
         }
     </script>
 </body>

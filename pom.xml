@@ -14,29 +14,25 @@
     <groupId>com.example</groupId>
     <artifactId>ai-project</artifactId>
     <version>1.0.0</version>
-    <name>Spring Boot AI Project</name>
-    <description>A beginner-friendly Spring Boot AI project</description>
+    <name>Spring Boot AI Toolkit</name>
+    <description>Beginner-friendly Spring Boot project with AI features</description>
     
     <properties>
         <java.version>11</java.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <start-class>com.example.ai.Application</start-class>
     </properties>
     
     <dependencies>
-        <!-- Spring Boot Web Starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         
-        <!-- Spring Boot Actuator for monitoring -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         
-        <!-- Spring Boot DevTools for hot reload (optional but useful) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -44,7 +40,6 @@
             <optional>true</optional>
         </dependency>
         
-        <!-- Testing dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -57,20 +52,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
             </plugin>
         </plugins>
     </build>
 </project>
-
-    <properties>
-        <java.version>11</java.version>
-        <start-class>com.example.ai.Application</start-class>
-    </properties>
