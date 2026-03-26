@@ -1,9 +1,9 @@
+
 package com.example.ai;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class AIService {
@@ -11,42 +11,34 @@ public class AIService {
     @Value("${ai.sentiment.enabled:true}")
     private boolean sentimentEnabled;
     
-    // Store analysis history (for learning purposes)
-    private Map<String, List<String>> analysisHistory = new ConcurrentHashMap<>();
+    private Map<String, List<String>> analysisHistory = new HashMap<>();
     
-    // Simple sentiment analysis
+    // Enhanced Sentiment Analysis with Weighted Scoring
     public String analyzeSentiment(String text) {
-        if (!sentimentEnabled) {
-            return "Sentiment analysis is disabled";
-        }
-        
-        if (text == null || text.isEmpty()) {
-            return "Neutral (No text provided)";
+        if (!sentimentEnabled) return "Sentiment analysis is disabled";
+        if (text == null || text.trim().isEmpty()) {
+            return "Neutral 😐 (No text provided)";
         }
         
         String lowerText = text.toLowerCase();
         
-        // Enhanced keyword lists
+        // Weighted keyword system
         Map<String, Integer> positiveWords = new HashMap<>();
-        positiveWords.put("good", 1);
-        positiveWords.put("great", 2);
-        positiveWords.put("awesome", 3);
         positiveWords.put("love", 3);
-        positiveWords.put("excellent", 3);
-        positiveWords.put("happy", 2);
         positiveWords.put("amazing", 3);
-        positiveWords.put("wonderful", 3);
-        positiveWords.put("fantastic", 3);
+        positiveWords.put("excellent", 3);
+        positiveWords.put("great", 2);
+        positiveWords.put("good", 1);
+        positiveWords.put("happy", 2);
+        positiveWords.put("awesome", 3);
         
         Map<String, Integer> negativeWords = new HashMap<>();
-        negativeWords.put("bad", 1);
-        negativeWords.put("terrible", 3);
         negativeWords.put("hate", 3);
+        negativeWords.put("terrible", 3);
         negativeWords.put("awful", 3);
+        negativeWords.put("bad", 1);
         negativeWords.put("sad", 2);
-        negativeWords.put("poor", 2);
         negativeWords.put("worst", 3);
-        negativeWords.put("horrible", 3);
         
         int positiveScore = 0;
         int negativeScore = 0;
@@ -63,31 +55,33 @@ public class AIService {
             }
         }
         
-        // Store in history
         String sentiment;
         if (positiveScore > negativeScore) {
-            sentiment = "Positive 😊 (Score: " + positiveScore + ")";
+            if (positiveScore >= 5) sentiment = "Positive 😊 (Very Strong)";
+            else if (positiveScore >= 3) sentiment = "Positive 😊 (Strong)";
+            else sentiment = "Positive 😊 (Moderate)";
         } else if (negativeScore > positiveScore) {
-            sentiment = "Negative 😔 (Score: " + negativeScore + ")";
+            if (negativeScore >= 5) sentiment = "Negative 😔 (Very Strong)";
+            else if (negativeScore >= 3) sentiment = "Negative 😔 (Strong)";
+            else sentiment = "Negative 😔 (Moderate)";
         } else {
-            sentiment = "Neutral 😐 (Score: 0)";
+            sentiment = "Neutral 😐 (Balanced)";
         }
         
-        // Save to history
+        // Store in history
         analysisHistory.computeIfAbsent("sentiment", k -> new ArrayList<>())
             .add(text + " -> " + sentiment);
         
         return sentiment;
     }
     
-    // Count words and characters
+    // Comprehensive Text Analysis
     public Map<String, Object> analyzeText(String text) {
         Map<String, Object> analysis = new HashMap<>();
         
         if (text == null || text.isEmpty()) {
             analysis.put("wordCount", 0);
             analysis.put("charCount", 0);
-            analysis.put("message", "No text provided");
             return analysis;
         }
         
@@ -96,37 +90,29 @@ public class AIService {
         analysis.put("charCount", text.length());
         analysis.put("charCountWithoutSpaces", text.replace(" ", "").length());
         
-        // Calculate average word length
         double avgWordLength = text.replace(" ", "").length() / (double) words.length;
         analysis.put("avgWordLength", String.format("%.2f", avgWordLength));
         
         return analysis;
     }
     
-    // Count vowels in text
+    // Vowel Counter
     public int countVowels(String text) {
-        if (text == null || text.isEmpty()) {
-            return 0;
-        }
+        if (text == null || text.isEmpty()) return 0;
         
         int count = 0;
         String lowerText = text.toLowerCase();
         Set<Character> vowels = Set.of('a', 'e', 'i', 'o', 'u');
         
         for (char c : lowerText.toCharArray()) {
-            if (vowels.contains(c)) {
-                count++;
-            }
+            if (vowels.contains(c)) count++;
         }
-        
         return count;
     }
     
-    // Count consonants
+    // Consonant Counter
     public int countConsonants(String text) {
-        if (text == null || text.isEmpty()) {
-            return 0;
-        }
+        if (text == null || text.isEmpty()) return 0;
         
         int count = 0;
         String lowerText = text.toLowerCase();
@@ -137,21 +123,16 @@ public class AIService {
                 count++;
             }
         }
-        
         return count;
     }
     
-    // Simple greeting service
+    // Greeting Generator
     public String generateGreeting(String name) {
         if (name == null || name.trim().isEmpty()) {
             name = "Friend";
         }
         
-        String[] greetings = {
-            "Hello", "Hi", "Hey", "Greetings", "Welcome", 
-            "Nice to see you", "Good to meet you", "Howdy"
-        };
-        
+        String[] greetings = {"Hello", "Hi", "Hey", "Greetings", "Welcome", "Nice to see you"};
         String[] emojis = {"👋", "😊", "🎉", "✨", "🌟"};
         
         Random random = new Random();
@@ -161,11 +142,9 @@ public class AIService {
         return greeting + ", " + name + "! " + emoji;
     }
     
-    // Check if text is palindrome
+    // Palindrome Checker
     public boolean isPalindrome(String text) {
-        if (text == null || text.isEmpty()) {
-            return false;
-        }
+        if (text == null || text.isEmpty()) return false;
         
         String cleanText = text.toLowerCase().replaceAll("[^a-z0-9]", "");
         String reversed = new StringBuilder(cleanText).reverse().toString();
@@ -173,12 +152,11 @@ public class AIService {
         return cleanText.equals(reversed);
     }
     
-    // Get analysis history
+    // History Management
     public Map<String, List<String>> getHistory() {
         return analysisHistory;
     }
     
-    // Clear history
     public void clearHistory() {
         analysisHistory.clear();
     }
