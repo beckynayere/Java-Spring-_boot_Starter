@@ -1,11 +1,23 @@
 # Build stage
 FROM maven:3.8.4-openjdk-11-slim AS build
-COPY src /home/app/src
-COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package -DskipTests
+WORKDIR /app
+
+# Copy pom.xml and source code
+COPY pom.xml .
+COPY src ./src
+
+# Build the application
+RUN mvn clean package -DskipTests
 
 # Run stage
 FROM openjdk:11-jre-slim
-COPY --from=build /home/app/target/ai-project-1.0.0.jar /usr/local/lib/app.jar
+WORKDIR /app
+
+# Copy the built JAR from build stage
+COPY --from=build /app/target/ai-project-1.0.0.jar app.jar
+
+# Expose port
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/usr/local/lib/app.jar"]
+
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]

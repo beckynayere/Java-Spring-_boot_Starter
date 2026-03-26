@@ -69,3 +69,8 @@
         </plugins>
     </build>
 </project>
+
+    <properties>
+        <java.version>11</java.version>
+        <start-class>com.example.ai.Application</start-class>
+    </properties>
